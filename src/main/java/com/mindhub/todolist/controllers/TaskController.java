@@ -1,6 +1,7 @@
 package com.mindhub.todolist.controllers;
 
 import com.mindhub.todolist.dtos.TaskDTO;
+import com.mindhub.todolist.models.Status;
 import com.mindhub.todolist.models.Task;
 import com.mindhub.todolist.services.TaskService;
 import com.mindhub.todolist.services.UserService;
@@ -40,12 +41,6 @@ public class TaskController {
         if(task.getDescription().isBlank()){
             return  ResponseEntity.badRequest().body("Missing description");
         }
-        if(task.getStatus() == null){
-            return  ResponseEntity.badRequest().body("Missing status");
-        }
-        if(task.getUser() == null){
-            return  ResponseEntity.badRequest().body("Missing user id");
-        }
 
         TaskDTO taskDTO = new TaskDTO(taskService.createTask(task));
         return new ResponseEntity<>( taskDTO, HttpStatus.CREATED);
@@ -62,7 +57,5 @@ public class TaskController {
         taskService.deleteTask(id);
         return new ResponseEntity<>( "None", HttpStatus.NO_CONTENT);
     }
-
-
 
 }
